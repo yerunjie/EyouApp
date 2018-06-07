@@ -13,6 +13,7 @@ import com.fitibo.eyouapp.R;
 import com.fitibo.eyouapp.base.EyouBaseActivity;
 import com.fitibo.eyouapp.base.EyouBaseCallBack;
 import com.fitibo.eyouapp.bean.Order;
+import com.fitibo.eyouapp.bean.OrderTicket;
 import com.fitibo.eyouapp.bean.ResultVo;
 import com.fitibo.eyouapp.constants.OrderStatus;
 import com.fitibo.eyouapp.constants.Transition;
@@ -27,7 +28,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDetailActivity extends EyouBaseActivity implements IEditable {
+public class OrderDetailActivity extends EyouBaseActivity implements IEditable, IAddTicketInterface {
     @BindView(R.id.right_labels)
     FloatingActionsMenu menu;
 
@@ -125,12 +126,12 @@ public class OrderDetailActivity extends EyouBaseActivity implements IEditable {
     }
 
     protected View createBottomSheetView() {
-        View view = LayoutInflater.from(this).inflate(R.layout.layout_order_ticket_bottom_sheet, (ViewGroup) getWindow().getDecorView(), false);
+        final View view = LayoutInflater.from(this).inflate(R.layout.layout_order_ticket_bottom_sheet, (ViewGroup) getWindow().getDecorView(), false);
         rv_order_tickets = view.findViewById(R.id.rv_order_tickets);
         rv_order_tickets.setLayoutManager(new LinearLayoutManager(this));
         //adapter = new OrderTicketAdapter(order.getOrderTickets(), this);
         rv_order_tickets.setAdapter(adapter);
-        TextView add_ticket = view.findViewById(R.id.tv_add_ticket);
+        final TextView add_ticket = view.findViewById(R.id.tv_add_ticket);
         if (editing) {
             add_ticket.setVisibility(View.VISIBLE);
             add_ticket.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +147,8 @@ public class OrderDetailActivity extends EyouBaseActivity implements IEditable {
     }
 
     private void showAddTicket() {
-        
+        AddTicketView addTicketView = new AddTicketView(this, tb_title_bar);
+        addTicketView.init(order);
     }
 
     private void initView() {
@@ -320,5 +322,17 @@ public class OrderDetailActivity extends EyouBaseActivity implements IEditable {
             bsl_bottom_sheet.dismissSheet();
         }
         ticketBottomSheet = createBottomSheetView();
+    }
+
+    @Override
+    public void addTicket(OrderTicket ticket) {
+        if (order != null) {
+            order.getOrderTickets().add(ticket);
+        }
+    }
+
+    @Override
+    public void onDismiss() {
+        adapter.notifyDataSetChanged();
     }
 }

@@ -32,7 +32,7 @@ import java.util.*;
 public abstract class BaseActivity extends AppCompatActivity {
     private View mRoot;
     private FrameLayout fl_container;
-    private Toolbar tb_title_bar;
+    protected Toolbar tb_title_bar;
     private TextView tv_title;
     private CircleImageView civ_title_bar_head_portrait;
     private float mIconSize, mTextSize;

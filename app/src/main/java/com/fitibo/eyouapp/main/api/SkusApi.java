@@ -1,6 +1,7 @@
 package com.fitibo.eyouapp.main.api;
 
 import com.fitibo.eyouapp.bean.Sku;
+import com.fitibo.eyouapp.bean.SkuTicketPrice;
 import com.lemon.support.request.SimpleCall;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -28,4 +29,11 @@ public interface SkusApi {
                                            @Path("toStatus") int toStatus,
                                            @Query("sendEmail") boolean sendEmail,
                                            @Body Order order);*/
+
+    @GET("skus/{skuId}/tickets/{ticketId}/prices")
+    SimpleCall<List<SkuTicketPrice>> querySkuTicketPrice(@Path("skuId") int skuId,
+                                                         @Path("ticketId") int ticketId,
+                                                         @Query("date") String date,
+                                                         @Query("orderId") int orderId
+    );
 }

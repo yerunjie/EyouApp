@@ -16,8 +16,8 @@ public class SkuTicketPrice {
     private String date;
     private String time;
     private BigDecimal salePrice;
-    private BigDecimal costPrice;
-    private BigDecimal realPrice;
+    //private BigDecimal costPrice;
+    //private BigDecimal realPrice;
     private BigDecimal price;
     private String description;
     private int currentCount;
