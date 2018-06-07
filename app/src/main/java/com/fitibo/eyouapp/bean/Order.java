@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by qianhao.zhou on 8/7/16.
@@ -34,7 +35,7 @@ public class Order {
     private String vendorPhone;
     private String agentName;
 
-    //private List<OrderTicketVo> orderTickets;
+    private List<OrderTicket> orderTickets;
     private String ticketDate;
     private String ticketDateWeekDay;
     private String ticketDateWeekDayEn;

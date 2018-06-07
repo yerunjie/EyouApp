@@ -47,4 +47,18 @@ public class EyouBaseActivity extends BaseActivity {
         return dialog;
     }
 
+    @Override
+    protected Dialog getDialog(String message, String positiveText, final DialogInterface.OnClickListener onButtonListener, DialogInterface.OnCancelListener onCancelListener) {
+        final MessageDialog dialog = new MessageDialog(this);
+        dialog.setMessage(message);
+        dialog.setPositiveButton(positiveText);
+        dialog.setOnButtonClickListener(new MessageDialog.OnButtonClickListener() {
+            @Override
+            public void onClick(int which) {
+                onButtonListener.onClick(dialog, which);
+            }
+        });
+        dialog.setOnCancelListener(onCancelListener);
+        return dialog;
+    }
 }

@@ -57,16 +57,16 @@
         <item name="android:textStyle">bold</item>
     </style>
     <style name="MainTextView">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text_primary</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:singleLine">false</item>
         <item name="android:layout_marginStart">5dp</item>
         <item name="android:padding">5dp</item>
     </style>
     <style name="MainTextViewLabel">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:textSize">16sp</item>
@@ -78,11 +78,12 @@
     <style name="MainEditText">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/dark_grey</item>
         <item name="android:textSize">15sp</item>
         <item name="android:singleLine">false</item>
         <item name="android:layout_marginStart">10dp</item>
         <item name="android:padding">5dp</item>
+        <item name="android:elevation">1dp</item>
         <item name="android:background">@drawable/bg_edittext</item>
     </style>
 </resources>

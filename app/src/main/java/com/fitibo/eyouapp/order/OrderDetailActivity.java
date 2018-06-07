@@ -1,10 +1,12 @@
 package com.fitibo.eyouapp.order;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.*;
 import android.widget.EditText;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.fitibo.eyouapp.R;
@@ -15,6 +17,9 @@ import com.fitibo.eyouapp.bean.ResultVo;
 import com.fitibo.eyouapp.constants.OrderStatus;
 import com.fitibo.eyouapp.constants.Transition;
 import com.fitibo.eyouapp.main.api.OrdersApi;
+import com.fitibo.eyouapp.order.adapter.OrderTicketAdapter;
+import com.flipboard.bottomsheet.BottomSheetLayout;
+import com.flipboard.bottomsheet.OnSheetDismissedListener;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
@@ -22,12 +27,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDetailActivity extends EyouBaseActivity {
+public class OrderDetailActivity extends EyouBaseActivity implements IEditable {
     @BindView(R.id.right_labels)
     FloatingActionsMenu menu;
-
-    @BindView(R.id.et_remark)
-    EditText et_remark;
 
     @BindView(R.id.et_sku)
     EditText et_sku;
@@ -61,10 +63,28 @@ public class OrderDetailActivity extends EyouBaseActivity {
     EditText et_primary_contact_email;
     @BindView(R.id.et_primary_contact_phone)
     EditText et_primary_contact_phone;
+    @BindView(R.id.et_remark)
+    EditText et_remark;
 
+    @BindView(R.id.bsl_bottom_sheet)
+    BottomSheetLayout bsl_bottom_sheet;
+
+    RecyclerView rv_order_tickets;
+    OrderTicketAdapter adapter;
+    @BindView(R.id.tv_show_ticket)
+    TextView tv_show_ticket;
+    @BindView(R.id.tv_submit)
+    TextView tv_submit;
+
+    private View ticketBottomSheet;
     private int orderId;
     private Order order;
     private boolean editing = false;
+
+    @Override
+    public boolean isEditing() {
+        return editing;
+    }
 
     private List<FloatingActionButton> buttons = new ArrayList<>();
 
@@ -75,13 +95,76 @@ public class OrderDetailActivity extends EyouBaseActivity {
         orderId = getIntent().getIntExtra("orderId", 0);
         initView();
         initData();
+
+    }
+
+    private void showBottomSheet() {
+        if (ticketBottomSheet == null) {
+            ticketBottomSheet = createBottomSheetView();
+        }
+        if (bsl_bottom_sheet.isSheetShowing()) {
+            bsl_bottom_sheet.dismissSheet();
+            bsl_bottom_sheet.addOnSheetDismissedListener(new OnSheetDismissedListener() {
+                @Override
+                public void onDismissed(BottomSheetLayout bottomSheetLayout) {
+                    menu.setVisibility(View.VISIBLE);
+                }
+            });
+        } else {
+            if (order != null) {
+                bsl_bottom_sheet.showWithSheetView(ticketBottomSheet);
+                bsl_bottom_sheet.addOnSheetDismissedListener(new OnSheetDismissedListener() {
+                    @Override
+                    public void onDismissed(BottomSheetLayout bottomSheetLayout) {
+                        menu.setVisibility(View.VISIBLE);
+                    }
+                });
+                menu.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    protected View createBottomSheetView() {
+        View view = LayoutInflater.from(this).inflate(R.layout.layout_order_ticket_bottom_sheet, (ViewGroup) getWindow().getDecorView(), false);
+        rv_order_tickets = view.findViewById(R.id.rv_order_tickets);
+        rv_order_tickets.setLayoutManager(new LinearLayoutManager(this));
+        //adapter = new OrderTicketAdapter(order.getOrderTickets(), this);
+        rv_order_tickets.setAdapter(adapter);
+        TextView add_ticket = view.findViewById(R.id.tv_add_ticket);
+        if (editing) {
+            add_ticket.setVisibility(View.VISIBLE);
+            add_ticket.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showAddTicket();
+                }
+            });
+        } else {
+            add_ticket.setVisibility(View.GONE);
+        }
+        return view;
+    }
+
+    private void showAddTicket() {
+        
     }
 
     private void initView() {
         ButterKnife.bind(this);
         showBackIcon();
         setTitleString("订单详情");
-
+        tv_show_ticket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBottomSheet();
+            }
+        });
+        tv_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setEditing();
+            }
+        });
     }
 
     private void initData() {
@@ -90,6 +173,25 @@ public class OrderDetailActivity extends EyouBaseActivity {
             public void onSuccess200(Order data) {
                 order = data;
                 initOrder(order);
+                adapter = new OrderTicketAdapter(order.getOrderTickets(), OrderDetailActivity.this);
+                adapter.setOnButtonClickListener(new OrderTicketAdapter.OnButtonClickListener() {
+                    @Override
+                    public void onButtonClick(View view, final int position) {
+                        getDialog("确认删除？", "删除", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                order.getOrderTickets().remove(position);
+                                //makeToast("删除" + position);
+                                adapter.notifyDataSetChanged();
+                            }
+                        }, new DialogInterface.OnCancelListener() {
+                            @Override
+                            public void onCancel(DialogInterface dialog) {
+
+                            }
+                        }).show();
+                    }
+                });
             }
         });
     }
@@ -149,7 +251,6 @@ public class OrderDetailActivity extends EyouBaseActivity {
         et_primary_contact_email.setEnabled(enabled);
         et_primary_contact_phone.setText(order.getPrimaryContactPhone());
         et_primary_contact_phone.setEnabled(enabled);
-
     }
 
     private void resetStatusButton(int status) {
@@ -200,17 +301,24 @@ public class OrderDetailActivity extends EyouBaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.option_edit:
-                editing = true;
-                initOrder(editing);
-                invalidateOptionsMenu();
+                setEditing();
                 return true;
             case R.id.option_finish:
-                editing = false;
-                initOrder(editing);
-                invalidateOptionsMenu();
+                setEditing();
                 return true;
             default:
                 return false;
         }
+    }
+
+    private void setEditing() {
+        editing = !editing;
+        initOrder(editing);
+        invalidateOptionsMenu();
+        tv_submit.setText(editing ? getString(R.string.submit) : getString(R.string.edit));
+        if (bsl_bottom_sheet.isSheetShowing()) {
+            bsl_bottom_sheet.dismissSheet();
+        }
+        ticketBottomSheet = createBottomSheetView();
     }
 }

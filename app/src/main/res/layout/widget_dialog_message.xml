@@ -71,7 +71,7 @@
             android:background="@drawable/common_shape_btn_dialog_bg_right"
             android:gravity="center|center_vertical"
             android:text="@string/app_dialog_ok"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/color_secondary_primary" />
     </LinearLayout>
 
 </LinearLayout>

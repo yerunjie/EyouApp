@@ -46,10 +46,11 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.google.guava:guava:21.0'
+    compile 'com.google.guava:guava:20.0'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.4'
     compile 'com.flipboard:bottomsheet-core:1.5.3'
     compile 'com.flipboard:bottomsheet-commons:1.5.3' // optional
+    compile 'com.getbase:floatingactionbutton:1.10.1'
 }

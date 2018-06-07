@@ -38,4 +38,17 @@
     <string name="email">Email</string>
     <string name="primary_contact_phone">联系电话</string>
     <string name="sku_name">sku名称</string>
+    <string name="add_ticket">添加</string>
+    <string name="order_ticket">票</string>
+    <string name="submit">提交</string>
+    <string name="edit">编辑</string>
+    <string name="show_ticket">查看票</string>
+    <string name="name">姓名</string>
+    <string name="age">年龄</string>
+    <string name="weight">体重</string>
+    <string name="sale_price">官网价格</string>
+    <string name="cost_price">核算价格</string>
+    <string name="separator">:</string>
+    <string name="ticket_name">票种</string>
+    <string name="delete">删除</string>
 </resources>

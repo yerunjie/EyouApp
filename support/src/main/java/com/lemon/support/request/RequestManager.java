@@ -31,7 +31,7 @@ public class RequestManager {
     private OkHttpClient mClient;
     private Retrofit retrofit;
     private Handler mHandler;
-    private static final String HOST_ = "http://192.168.0.123:8080/v1/api/"; //todo 补充host
+    private static final String HOST_ = "http://10.0.3.2:8080/v1/api/"; //todo 补充host
     private Map<String, Retrofit> mRetrofitMap = new HashMap<>();
     private PersistentCookieJar mCookieJar;
 

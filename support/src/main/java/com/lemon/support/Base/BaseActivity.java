@@ -106,7 +106,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        fl_container =  mRoot.findViewWithTag("fl_container");
+        fl_container = mRoot.findViewWithTag("fl_container");
         tv_title = mRoot.findViewWithTag("tv_title");
         tb_title_bar = mRoot.findViewWithTag("tb_title_bar");
         setSupportActionBar(tb_title_bar);
@@ -449,6 +449,16 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract Dialog getRetryDialog(DialogInterface.OnClickListener onButtonListener,
                                              DialogInterface.OnCancelListener onCancelListener);
+
+    protected abstract Dialog getDialog(String message, String positiveText,
+                                        DialogInterface.OnClickListener onButtonListener,
+                                        DialogInterface.OnCancelListener onCancelListener);
+
+    protected Dialog getDialog(int message, int positiveText,
+                               DialogInterface.OnClickListener onButtonListener,
+                               DialogInterface.OnCancelListener onCancelListener) {
+        return getDialog(getString(message), getString(positiveText), onButtonListener, onCancelListener);
+    }
 
     @Override
     public void finish() {
