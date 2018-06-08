@@ -14,7 +14,8 @@ import java.util.List;
  */
 public interface OrdersApi {
     @GET("orders")
-    SimpleCall<List<Order>> queryOrders();
+    SimpleCall<List<Order>> queryOrders(@Query("pagesize") int pageSize,
+                                        @Query("pagenumber") int pageNumber);
 
     @GET("orders/{id}")
     SimpleCall<Order> queryOrderById(@Path("id") int id);
@@ -24,4 +25,7 @@ public interface OrdersApi {
                                            @Path("toStatus") int toStatus,
                                            @Query("sendEmail") boolean sendEmail,
                                            @Body Order order);
+
+    @PUT("orders/{id}")
+    SimpleCall<Order> updateOrder(@Path("id") int id, @Body Order order);
 }

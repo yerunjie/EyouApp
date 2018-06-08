@@ -314,14 +314,31 @@ public class OrderDetailActivity extends EyouBaseActivity implements IEditable, 
     }
 
     private void setEditing() {
-        editing = !editing;
-        initOrder(editing);
-        invalidateOptionsMenu();
-        tv_submit.setText(editing ? getString(R.string.submit) : getString(R.string.edit));
-        if (bsl_bottom_sheet.isSheetShowing()) {
-            bsl_bottom_sheet.dismissSheet();
+        if (editing) {
+            resetOrder();
+            addRequest(getService(OrdersApi.class).updateOrder(orderId, order), new EyouBaseCallBack<Order>() {
+                @Override
+                public void onSuccess200(Order o) {
+                    editing = false;
+                    initData();
+                    invalidateOptionsMenu();
+                    tv_submit.setText(editing ? getString(R.string.submit) : getString(R.string.edit));
+                    if (bsl_bottom_sheet.isSheetShowing()) {
+                        bsl_bottom_sheet.dismissSheet();
+                    }
+                    ticketBottomSheet = createBottomSheetView();
+                }
+            });
+        } else {
+            editing = true;
+            initOrder(editing);
+            invalidateOptionsMenu();
+            tv_submit.setText(editing ? getString(R.string.submit) : getString(R.string.edit));
+            if (bsl_bottom_sheet.isSheetShowing()) {
+                bsl_bottom_sheet.dismissSheet();
+            }
+            ticketBottomSheet = createBottomSheetView();
         }
-        ticketBottomSheet = createBottomSheetView();
     }
 
     @Override

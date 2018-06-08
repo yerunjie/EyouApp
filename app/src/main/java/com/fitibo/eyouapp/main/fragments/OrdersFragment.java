@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -30,13 +32,21 @@ import java.util.List;
  */
 public class OrdersFragment extends EyouBaseFragment {
     private static final int offset = 30;
+    private static final int pageSize = 10;
     private Unbinder unbinder;
 
     @BindView(R.id.rv_orders)
     RecyclerView rv_orders;
+    @BindView(R.id.srl_orders)
+    SwipeRefreshLayout srl_orders;
+    @BindView(R.id.sv_orders_search)
+    SearchView sv_orders_search;
 
     private OrdersAdapter adapter;
     private List<Order> orders = new ArrayList<>();
+    private LinearLayoutManager linearLayoutManager;
+    private int pageNumber = 0;
+    private int lastVisibleItem = 10;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -46,19 +56,30 @@ public class OrdersFragment extends EyouBaseFragment {
     }
 
     private void initData() {
-        addRequest(getService(OrdersApi.class).queryOrders(), new EyouBaseCallBack<List<Order>>() {
+        addRequest(getService(OrdersApi.class).queryOrders(pageSize, pageNumber), new EyouBaseCallBack<List<Order>>() {
             @Override
             public void onSuccess200(List<Order> list) {
-                orders.clear();
                 orders.addAll(list);
                 adapter.notifyDataSetChanged();
+                srl_orders.setRefreshing(false);
+                pageNumber++;
             }
         });
     }
 
     private void initView() {
         setTitleString("订单");
-        rv_orders.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        srl_orders.setColorSchemeResources(R.color.colorPrimary);
+        srl_orders.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pageNumber = 0;
+                orders.clear();
+                initData();
+            }
+        });
+        linearLayoutManager = new LinearLayoutManager(this.getActivity());
+        rv_orders.setLayoutManager(linearLayoutManager);
         rv_orders.setItemAnimator(new DefaultItemAnimator());
         adapter = new OrdersAdapter(orders);
         rv_orders.setAdapter(adapter);
@@ -80,6 +101,21 @@ public class OrdersFragment extends EyouBaseFragment {
                 Intent intent = new Intent(getContext(), OrderDetailActivity.class);
                 intent.putExtra("orderId", order.getId());
                 startActivity(intent);
+            }
+        });
+        rv_orders.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 == adapter.getItemCount()) {
+                    initData();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
             }
         });
     }

@@ -98,14 +98,14 @@ public class SkusFragment extends EyouBaseFragment {
                 }
             }
         });
-        adapter.setOnItemClickListener(new SkusAdapter.OnItemClickListener() {
+        /*adapter.setOnItemClickListener(new SkusAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, Sku sku) {
                 Intent intent = new Intent(getContext(), OrderDetailActivity.class);
                 intent.putExtra("orderId", sku.getId());
                 startActivity(intent);
             }
-        });
+        });*/
         rv_skus.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {

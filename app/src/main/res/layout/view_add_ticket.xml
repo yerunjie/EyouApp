@@ -16,7 +16,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
             <TextView
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:text="@string/add_ticket_title"
                     android:layout_weight="1"/>
             <Button
@@ -52,7 +52,7 @@
                     android:id="@+id/btn_choose_date"
                     android:text="@string/choose_date"/>
             <TextView
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_chosen_date"/>
         </LinearLayout>
         <Spinner
@@ -75,7 +75,7 @@
                     android:orientation="vertical">
                 <TextView
                         android:text="@string/name"
-                        style="@style/MainTextViewLabel"
+                        style="@style/TextViewLabelNormalVertical"
                         android:id="@+id/tv_name"/>
                 <EditText
                         android:id="@+id/et_name"
@@ -88,7 +88,7 @@
                     android:orientation="vertical">
                 <TextView
                         android:text="@string/age"
-                        style="@style/MainTextViewLabel"
+                        style="@style/TextViewLabelNormalVertical"
                         android:id="@+id/tv_age"/>
                 <EditText
                         android:id="@+id/et_age"
@@ -101,7 +101,7 @@
                     android:orientation="vertical">
                 <TextView
                         android:text="@string/weight"
-                        style="@style/MainTextViewLabel"
+                        style="@style/TextViewLabelNormalVertical"
                         android:id="@+id/tv_weight"/>
                 <EditText
                         android:id="@+id/et_weight"

@@ -10,15 +10,15 @@
 
     <TextView
             android:text="sku_name"
-            style="@style/SmallTextViewLabel"
+            style="@style/TextViewLabelSmallVertical"
             android:id="@+id/tv_sku_name"/>
     <TextView
             android:text="uuid"
-            style="@style/SmallTextView"
+            style="@style/TextViewSmallVertical"
             android:id="@+id/tv_uuid"/>
     <TextView
             android:text="city"
-            style="@style/SmallTextView"
+            style="@style/TextViewSmallVertical"
             android:id="@+id/tv_city"/>
 
 </LinearLayout>

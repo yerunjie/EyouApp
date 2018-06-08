@@ -42,7 +42,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
         holder.tv_ticket_date.setText(order.getTicketDate());
         holder.tv_uuid.setText(order.getUuid());
         holder.tv_status.setText(OrderStatus.valueOf(order.getStatus()).getDesc());
-        //holder.tv_sku.setText(order.getSku());
+        holder.tv_agent_name.setText(order.getAgentName());
 
         holder.itemView.setTag(position);
         holder.itemView.setOnClickListener(this);
@@ -71,6 +71,8 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
         TextView tv_ticket_date;
         @BindView(R.id.tv_status)
         TextView tv_status;
+        @BindView(R.id.tv_agent_name)
+        TextView tv_agent_name;
 
         public ViewHolder(View view) {
             super(view);

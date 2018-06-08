@@ -19,84 +19,84 @@
                 android:layout_height="wrap_content">
             <TextView
                     android:text="@string/sku_name"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_sku"/>
             <EditText
                     android:id="@+id/et_sku"
                     style="@style/MainEditText"/>
             <TextView
                     android:text="@string/status"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_status"/>
             <EditText
                     android:id="@+id/et_status"
                     style="@style/MainEditText"/>
             <TextView
                     android:text="@string/order_price"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_price"/>
             <EditText
                     android:id="@+id/et_price"
                     style="@style/MainEditText"/>
             <TextView
                     android:text="@string/order_uuid"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_uuid"/>
             <EditText
                     android:id="@+id/et_uuid"
                     style="@style/MainEditText"/>
             <TextView
                     android:text="@string/reference_number"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_reference_number"/>
             <EditText
                     android:id="@+id/et_reference_number"
                     style="@style/MainEditText"/>
             <TextView
                     android:text="@string/vendor_phone"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_vendor_phone"/>
             <EditText
                     android:id="@+id/et_vendor_phone"
                     style="@style/MainEditText"/>
             <TextView
                     android:text="@string/agent_name"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_agent_name"/>
             <EditText
                     android:id="@+id/et_agent_name"
                     style="@style/MainEditText"/>
             <TextView
                     android:text="@string/agent_order_id"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_agent_order_id"/>
             <EditText
                     android:id="@+id/et_agent_order_id"
                     style="@style/MainEditText"/>
             <TextView
                     android:text="@string/ticket_date"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_ticket_date"/>
             <EditText
                     android:id="@+id/et_ticket_date"
                     style="@style/MainEditText"/>
             <TextView
                     android:text="@string/gathering_place"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_gathering_place"/>
             <EditText
                     android:id="@+id/et_gathering_place"
                     style="@style/MainEditText"/>
             <TextView
                     android:text="@string/gathering_time"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_gathering_time"/>
             <EditText
                     android:id="@+id/et_gathering_time"
                     style="@style/MainEditText"/>
             <TextView
                     android:text="@string/ticket_time"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_ticket_time"/>
             <EditText
                     android:id="@+id/et_ticket_time"
@@ -104,14 +104,14 @@
             <TextView
                     android:text="@string/remark"
                     android:labelFor="@+id/et_remark"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_remark"/>
             <EditText
                     android:id="@+id/et_remark"
                     style="@style/MainEditText"/>
             <TextView
                     android:text="@string/primary_contact"
-                    style="@style/MainTextViewLabel"/>
+                    style="@style/TextViewLabelNormalVertical"/>
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                         android:orientation="vertical">
                     <TextView
                             android:text="@string/first_name"
-                            style="@style/MainTextViewLabel"
+                            style="@style/TextViewLabelNormalVertical"
                             android:id="@+id/tv_first_name"/>
                     <EditText
                             android:id="@+id/et_first_name"
@@ -138,7 +138,7 @@
                         android:orientation="vertical">
                     <TextView
                             android:text="@string/last_name"
-                            style="@style/MainTextViewLabel"
+                            style="@style/TextViewLabelNormalVertical"
                             android:id="@+id/tv_last_name"/>
                     <EditText
                             android:id="@+id/et_last_name"
@@ -147,14 +147,14 @@
             </LinearLayout>
             <TextView
                     android:text="@string/email"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_primary_contact_email"/>
             <EditText
                     android:id="@+id/et_primary_contact_email"
                     style="@style/MainEditText"/>
             <TextView
                     android:text="@string/primary_contact_phone"
-                    style="@style/MainTextViewLabel"
+                    style="@style/TextViewLabelNormalVertical"
                     android:id="@+id/tv_primary_contact_phone"/>
             <EditText
                     android:id="@+id/et_primary_contact_phone"
