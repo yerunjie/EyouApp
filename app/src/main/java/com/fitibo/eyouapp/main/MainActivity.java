@@ -13,7 +13,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.fitibo.eyouapp.R;
 import com.fitibo.eyouapp.base.EyouBaseActivity;
-import com.fitibo.eyouapp.main.fragments.IndexFragment;
+import com.fitibo.eyouapp.main.fragments.MessageBoardFragment;
 import com.fitibo.eyouapp.main.fragments.OrdersFragment;
 import com.fitibo.eyouapp.main.fragments.SkusFragment;
 
@@ -82,7 +82,7 @@ public class MainActivity extends EyouBaseActivity implements BottomNavigationBa
 
     private ArrayList<Fragment> getFragments() {
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(IndexFragment.newInstance());
+        fragments.add(MessageBoardFragment.newInstance());
         fragments.add(OrdersFragment.newInstance());
         fragments.add(SkusFragment.newInstance());
         return fragments;
@@ -121,7 +121,7 @@ public class MainActivity extends EyouBaseActivity implements BottomNavigationBa
                         fragment = OrdersFragment.newInstance();
                         break;
                     case FRAGMENT_POSITION_INDEX:
-                        fragment = IndexFragment.newInstance();
+                        fragment = MessageBoardFragment.newInstance();
                         break;
                     default:
                         break;
