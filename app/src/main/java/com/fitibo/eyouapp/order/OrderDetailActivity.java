@@ -182,9 +182,17 @@ public class OrderDetailActivity extends EyouBaseActivity implements IEditable, 
                         getDialog("确认删除？", "删除", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                order.getOrderTickets().remove(position);
-                                //makeToast("删除" + position);
-                                adapter.notifyDataSetChanged();
+                                OrderTicket ticket = order.getOrderTickets().get(position);
+                                addRequest(getService(OrdersApi.class).deleteTicket(ticket.getId()), new EyouBaseCallBack<Boolean>() {
+                                    @Override
+                                    public void onSuccess200(Boolean b) {
+                                        if(b){
+                                            order.getOrderTickets().remove(position);
+                                            makeToast("删除成功");
+                                            adapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                });
                             }
                         }, new DialogInterface.OnCancelListener() {
                             @Override
@@ -266,6 +274,7 @@ public class OrderDetailActivity extends EyouBaseActivity implements IEditable, 
             button.setSize(FloatingActionButton.SIZE_MINI);
             button.setTitle(transition.getAction());
             menu.addButton(button);
+            buttons.add(button);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -183,7 +183,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 if (msg.what == WHAT_DISMISS_LOADINGDIALOG) {// 避免请求框高频闪动
                     try {
                         boolean needShow = outer.mCancelableCallList.size() > 0 || outer.mUncancelableCallList.size() > 0;
-                        if (outer.mLoadingDialog.isShowing() && !needShow) {
+                        if (outer.mLoadingDialog != null && outer.mLoadingDialog.isShowing() && !needShow) {
                             outer.mLoadingDialog.dismiss();
                             if (!outer.mRetryDialog.isShowing() && outer.mRetryCallMap.size() > 0) {
                                 outer.mRetryDialog.show();
@@ -202,23 +202,25 @@ public abstract class BaseActivity extends AppCompatActivity {
         mCustomRootLayout = getCustomRootLayoutId();
         // 初始化加载框
         mLoadingDialog = getLoadingDialog();
-        mLoadingDialog.setCancelable(false);
-        mLoadingDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
-                if (mLoadingDialog.isShowing() && keyCode == KeyEvent.KEYCODE_BACK &&
-                        keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-                    // 拦截在加载框显示过程中的物理返回键，用于下面做取消的动作
-                    return true;
-                } else if (mLoadingDialog.isShowing() && keyCode == KeyEvent.KEYCODE_BACK &&
-                        keyEvent.getAction() == KeyEvent.ACTION_UP) {
-                    cancelRequest();
-                    return true;
-                } else {
-                    return false;
+        if (mLoadingDialog != null) {
+            mLoadingDialog.setCancelable(false);
+            mLoadingDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                @Override
+                public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent keyEvent) {
+                    if (mLoadingDialog.isShowing() && keyCode == KeyEvent.KEYCODE_BACK &&
+                            keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+                        // 拦截在加载框显示过程中的物理返回键，用于下面做取消的动作
+                        return true;
+                    } else if (mLoadingDialog.isShowing() && keyCode == KeyEvent.KEYCODE_BACK &&
+                            keyEvent.getAction() == KeyEvent.ACTION_UP) {
+                        cancelRequest();
+                        return true;
+                    } else {
+                        return false;
+                    }
                 }
-            }
-        });
+            });
+        }
 
         // 初始化重试框
         mRetryDialog = getRetryDialog(new DialogInterface.OnClickListener() {
@@ -390,10 +392,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void refreshDialogState() {
         boolean needShow = mCancelableCallList.size() > 0 || mUncancelableCallList.size() > 0;
         mParentHandler.removeMessages(WHAT_DISMISS_LOADINGDIALOG);
-        if (!mLoadingDialog.isShowing() && needShow) {
-            mLoadingDialog.show();
-        } else {
-            mParentHandler.sendEmptyMessageDelayed(WHAT_DISMISS_LOADINGDIALOG, LOADING_DISMISS_DELAY);
+        if (mLoadingDialog != null) {
+            if (!mLoadingDialog.isShowing() && needShow) {
+                mLoadingDialog.show();
+            } else {
+                mParentHandler.sendEmptyMessageDelayed(WHAT_DISMISS_LOADINGDIALOG, LOADING_DISMISS_DELAY);
+            }
         }
     }
 
@@ -463,7 +467,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void finish() {
 
-        if (mLoadingDialog.isShowing()) {
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
             mLoadingDialog.dismiss();
         }
 

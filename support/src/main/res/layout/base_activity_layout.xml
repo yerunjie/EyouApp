@@ -30,7 +30,7 @@
                 android:textColor="@color/white"
                 android:text="标题"
                 android:tag="tv_title"
-                android:textSize="22sp"/>
+                android:textSize="20sp"/>
     </android.support.v7.widget.Toolbar>
     <FrameLayout
             android:id="@+id/fl_container"
